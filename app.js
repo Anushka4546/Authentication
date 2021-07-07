@@ -1,12 +1,20 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-//const ejsLint = require('ejs-lint');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
 const app = express();
+const server = require("http").Server(app);
+const io = require('socket.io')(server)
+const { ExpressPeerServer } = require('peer');
+const peerServer = ExpressPeerServer(server, {
+  debug: true
+});
+const { v4: uuidv4 } = require("uuid");
+
+app.use('/peerjs', peerServer);
 
 //passport config
 require('./config/passport')(passport);
@@ -21,8 +29,8 @@ mongoose.connect(db, { useNewUrlParser: true })
 
 // EJS
 app.use(expressLayouts);
-// app.use(ejsLint);
 app.set('view engine', 'ejs');
+app.use(express.static("public"));
 
 //Bodyparser
 app.use(express.urlencoded({ extended: false}));
@@ -53,9 +61,25 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
 
-// video chat
+//join room
+app.post("/join-room", (req, res) => {
+    res.redirect(`/${req.body.room_id}`);
+});
 
+// video chat
+io.on("connection", (socket) => {
+    socket.on("join-room", (roomId, userId, userName) => {
+      socket.join(roomId);
+      socket.broadcast.to(roomId).emit('user-connected', userId);
+      socket.on("message", (message) => {
+        io.to(roomId).emit("createMessage", message, userName);
+      });
+      socket.on('disconnect', () => {
+        socket.broadcast.to(roomId).emit('user-disconnected', userId)
+      });
+    });
+  });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+server.listen(PORT, console.log(`Server started on port ${PORT}`));
