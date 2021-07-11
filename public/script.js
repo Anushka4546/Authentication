@@ -19,7 +19,7 @@ showChat.addEventListener("click", () => {
   document.querySelector(".header__back").style.display = "block";
 });
 
-const user = prompt("Enter your name");
+const user =   prompt("Enter your name");
 
 const peer = new Peer();
 
@@ -155,12 +155,12 @@ inviteButton.addEventListener("click", (e) => {
   );
 });
 
-socket.on("createMessage", (message, userName) => {
+socket.on("createMessage", (message) => {
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
         <b><i class="far fa-user-circle"></i> <span> ${
-          userName === user ? "me" : userName
+        user
         }</span> </b>
         <span>${message}</span>
     </div>`;

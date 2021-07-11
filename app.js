@@ -105,18 +105,6 @@ io.on('connection', socket => {
   })
 })
 
-// io.on("connection", (socket) => {
-//     socket.on("join-room", (roomId, userId, userName) => {
-//       socket.join(roomId);
-//       socket.broadcast.to(roomId).emit('user-connected', userId);
-//       socket.on("message", (message) => {
-//         io.to(roomId).emit("createMessage", message, userName);
-//       });
-//       socket.on('disconnect', () => {
-//         socket.broadcast.to(roomId).emit('user-disconnected', userId)
-//       });
-//     });
-//   });
 
 const PORT = process.env.PORT || 5000;
 
