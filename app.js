@@ -12,6 +12,7 @@ const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
   debug: true
 });
+const User = require("./User.js");
 const { v4: uuidv4 } = require("uuid");
 
 app.use('/peerjs', peerServer);
@@ -67,18 +68,55 @@ app.post("/join-room", (req, res) => {
 });
 
 // video chat
-io.on("connection", (socket) => {
-    socket.on("join-room", (roomId, userId, userName) => {
-      socket.join(roomId);
-      socket.broadcast.to(roomId).emit('user-connected', userId);
-      socket.on("message", (message) => {
-        io.to(roomId).emit("createMessage", message, userName);
-      });
-      socket.on('disconnect', () => {
-        socket.broadcast.to(roomId).emit('user-disconnected', userId)
-      });
-    });
+let user_list = {};
+
+const sendToAllRoom = (room, emit, message) => {
+  for (let i in user_list) {
+      if (user_list[i].room == room) {
+          user_list[i].socket.emit(emit, message);
+      }
+  }
+}
+
+io.on('connection', socket => {
+  //DEBUG: JOIN-ROOM NOT BEING SENT
+  //FIXED: JOIN-ROOM SENT CREATED HELPER FUNCTION ABOVE CALLED SENDTOALLROOM
+  socket.on('join-room', (roomId, userId) => {
+      socket.id = userId;
+      socket.room = roomId;
+      socket.join(roomId)
+
+      sendToAllRoom(roomId, 'user-connected', userId);
+      console.log(`joined ${roomId}`);
+
+      user_list[socket.id] = new User({ name: `User_${user_list.length}`, socket: socket });
   });
+
+  // messages
+  socket.on('message', (message) => {
+      console.log(message, user_list[socket.id].room);
+      //send message to the same room
+      sendToAllRoom(user_list[socket.id].room, "createMessage", message);
+  });
+
+  socket.on('disconnect', () => {
+      sendToAllRoom(user_list[socket.id].room, "user-disconnected", socket.id);
+      delete user_list[socket.id];
+  })
+})
+
+// io.on("connection", (socket) => {
+//     socket.on("join-room", (roomId, userId, userName) => {
+//       socket.join(roomId);
+//       socket.broadcast.to(roomId).emit('user-connected', userId);
+//       socket.on("message", (message) => {
+//         io.to(roomId).emit("createMessage", message, userName);
+//       });
+//       socket.on('disconnect', () => {
+//         socket.broadcast.to(roomId).emit('user-disconnected', userId)
+//       });
+//     });
+//   });
 
 const PORT = process.env.PORT || 5000;
 

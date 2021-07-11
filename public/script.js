@@ -1,6 +1,4 @@
-console.log("hello");
 const socket = io();
-console.log("hi");
 const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
 const showChat = document.querySelector("#showChat");
