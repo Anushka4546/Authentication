@@ -78,10 +78,18 @@ const sendToAllRoom = (room, emit, message) => {
   }
 }
 
+const sendToAllRooms = (room, emit, message, userName) => {
+    for (let i in user_list) {
+        if (user_list[i].room == room) {
+            user_list[i].socket.emit(emit, message, userName);
+        }
+    }
+  }
+
 io.on('connection', socket => {
   //DEBUG: JOIN-ROOM NOT BEING SENT
   //FIXED: JOIN-ROOM SENT CREATED HELPER FUNCTION ABOVE CALLED SENDTOALLROOM
-  socket.on('join-room', (roomId, userId) => {
+  socket.on('join-room', (roomId, userId, userName) => {
       socket.id = userId;
       socket.room = roomId;
       socket.join(roomId)
@@ -90,19 +98,22 @@ io.on('connection', socket => {
       console.log(`joined ${roomId}`);
 
       user_list[socket.id] = new User({ name: `User_${user_list.length}`, socket: socket });
-  });
 
-  // messages
-  socket.on('message', (message) => {
-      console.log(message, user_list[socket.id].room);
-      //send message to the same room
-      sendToAllRoom(user_list[socket.id].room, "createMessage", message);
-  });
+    // messages
+    socket.on('message', (message) => {
+        console.log(message, user_list[socket.id].room);
+        //send message to the same room
+        sendToAllRooms(user_list[socket.id].room, "createMessage", message, userName);
+    });
+    // socket.on("message", (message) => {
+    //     io.to(roomId).emit("createMessage", message, userName);
+    //   });
 
-  socket.on('disconnect', () => {
-      sendToAllRoom(user_list[socket.id].room, "user-disconnected", socket.id);
-      delete user_list[socket.id];
-  })
+    socket.on('disconnect', () => {
+        sendToAllRoom(user_list[socket.id].room, "user-disconnected", socket.id);
+        delete user_list[socket.id];
+    })
+})
 })
 
 

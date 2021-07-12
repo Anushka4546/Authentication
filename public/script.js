@@ -98,37 +98,18 @@ text.addEventListener("keydown", (e) => {
 const inviteButton = document.querySelector("#inviteButton");
 const muteButton = document.querySelector("#muteButton");
 const stopVideo = document.querySelector("#stopVideo");
-const shareScreen = document.querySelector("#screenShare");
-shareScreen.addEventListener("click", () => {
-  navigator.mediaDevices.getDisplayMedia({
-    video: {
-      cursor: "always"
-    },
-    audio: {
-      echoCancellation: true,
-      noiseSuppression: true
-    }
-  }).then((stream) => {
-    let videoTrack = stream.getVideoTracks()[0];
-    let sender = currentPeer.getSender().find(function(s) {
-      return s.track.kind = videoTrack.kind
-    })
-    sender.replaceTrack(videoTrack)
-  }).catch((err) => {
-    console.log("unable to get display media" + err)
-  })
-})
+
 muteButton.addEventListener("click", () => {
   const enabled = myVideoStream.getAudioTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getAudioTracks()[0].enabled = false;
     html = `<i class="fas fa-microphone-slash"></i>`;
-    muteButton.classList.toggle("background__orange");
+    muteButton.classList.toggle("background__red");
     muteButton.innerHTML = html;
   } else {
     myVideoStream.getAudioTracks()[0].enabled = true;
     html = `<i class="fas fa-microphone"></i>`;
-    muteButton.classList.toggle("background__orange");
+    muteButton.classList.toggle("background__red");
     muteButton.innerHTML = html;
   }
 });
@@ -138,12 +119,12 @@ stopVideo.addEventListener("click", () => {
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
     html = `<i class="fas fa-video-slash"></i>`;
-    stopVideo.classList.toggle("background__orange");
+    stopVideo.classList.toggle("background__red");
     stopVideo.innerHTML = html;
   } else {
     myVideoStream.getVideoTracks()[0].enabled = true;
     html = `<i class="fas fa-video"></i>`;
-    stopVideo.classList.toggle("background__orange");
+    stopVideo.classList.toggle("background__red");
     stopVideo.innerHTML = html;
   }
 });
@@ -155,13 +136,38 @@ inviteButton.addEventListener("click", (e) => {
   );
 });
 
-socket.on("createMessage", (message) => {
+socket.on("createMessage", (message, userName) => {
   messages.innerHTML =
     messages.innerHTML +
     `<div class="message">
         <b><i class="far fa-user-circle"></i> <span> ${
-        user
+          userName === user ? "you": userName
         }</span> </b>
         <span>${message}</span>
     </div>`;
 });
+
+
+
+// const shareScreen = document.querySelector("#screenShare");
+// shareScreen.addEventListener("click", () => {
+//   navigator.mediaDevices.getDisplayMedia({
+//     video: {
+//       cursor: "always"
+//     },
+//     audio: {
+//       echoCancellation: true,
+//       noiseSuppression: true
+//     }
+//   }).then((stream) => {
+//     let videoTrack = stream.getVideoTracks()[0];
+//     let sender = currentPeer.getSender().find(function(s) {
+//       return s.track.kind = videoTrack.kind
+//     })
+//     sender.replaceTrack(videoTrack)
+//   }).catch((err) => {
+//     console.log("unable to get display media" + err)
+//   })
+// })
+
+

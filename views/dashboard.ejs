@@ -1,9 +1,9 @@
 <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome  <%= user.name %></p>
+<p class="lead mb-3">Welcome <%= user.name %></p>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid nav-contcnt">
-        <a class="navbar-brand" href="#" style="color: #5F6368;"> <span style="font-weight: bold;"></span> Video Chat</a>
+        <a class="navbar-brand" href="#" style="color: #5F6368;"> <span style="font-weight: bold;"></span> Teams </a>
         <div class="d-flex">
             <p class="m-0 px-3" style="font-weight: bold; color: #5F6368;">
                 <%= user.name %>
@@ -60,7 +60,7 @@
             </h1>
            
             <div class="a123 my-5" style="display: flex; ">
-                <a class="btn btn-primary new-meeting" style="width: 180px;" href="/newMeeting" role="button">New
+                <a class="btn btn-primary new-meeting" style="width: 180px; background-color: #4B53BC; border: 2px solid #4b53bc;" href="/newMeeting" role="button">New
                     Meeting</a>
                 <form action="join-room" style="margin-left: 1rem;" method="POST">
                     <div class="input-group ">
@@ -69,7 +69,7 @@
                         </span>
                         <input name="room_id" type="text" class="form-control" placeholder="Enter a code or Link"
                             aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Join</button>
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2" style = "color: #4b53bc; border: 2px solid #4b53bc;">Join</button>
                     </div>
                 </form>
             </div>

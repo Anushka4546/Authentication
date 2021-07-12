@@ -1,7 +1,7 @@
 :root {
     --main-darklg: #1d2635;
     --main-dark: #161d29;
-    --primary-color: #2f80ec;
+    --primary-color: #5d9cee;
     --main-light: #eeeeee;
     font-family: "Poppins", sans-serif;
   }
@@ -18,7 +18,7 @@
     height: 8vh;
     position: relative;
     width: 100%;
-    background-color: var(--main-darklg);
+    background-color: var(--main-dark);
   }
   
   .logo > h3 {
@@ -75,7 +75,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(47, 137, 255);
+    background-color: #4B53BC;
     height: 40px;
     border-radius: 5px;
     color: var(--main-light);
@@ -84,8 +84,9 @@
     margin: 0 0.5rem;
   }
   
-  .background__orange {
-    background-color: #f68e48;
+  
+  .background__red {
+    background-color: red;
   }
   
   .main__right {
@@ -144,7 +145,7 @@
   }
   
   .message > span {
-    background-color: #eeeeee;
+    background-color: #95bcf0;
     margin: 1rem 0;
     padding: 1rem;
     border-radius: 5px;
