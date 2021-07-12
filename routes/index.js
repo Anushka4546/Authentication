@@ -16,16 +16,7 @@ router.get('/dashboard', ensureAuthenticated, (req, res) =>
 router.get("/newMeeting",  ensureAuthenticated, (req, res) => {
     res.redirect(`/${uuidv4()}`);
   });
-  // router.get("/:room", ensureAuthenticated, async (req, res) => {
-  //   const roomData = await room.findOne({ roomId: req.params.room }).exec();
-  //   res.render("room", {
-  //     tabName: "S-Meet",
-  //     layout: "layouts/videoLayout",
-  //     roomId: req.params.room,
-  //     //screen: req.query.screen,
-  //     user: req.user,
-  //   });
-  // });
+
 router.get("/:room", ensureAuthenticated, (req, res) => {
     res.render("room", { roomId: req.params.room });
 });
