@@ -82,19 +82,28 @@ That's it. Go to http://localhost:5000/ to begin right away!
 
 # Demo
 As you open the link to the app or run it locally, you'll come across a front page. To begin, click on the Register button.
-<<<<<<< HEAD
-![register](./images/register.png)
+
+![homepage](./Images/Homepage.png)
+
 
 If you're visiting the page for the first time, or want to create a new account, add your email id and choose a random password atleast 8 characters long. Also add the password again to confirm, and then click on register. If you already have an account, click on the Already have an account link (login).
 
+![register](./Images/register.png)
+
 After this, you will be redirected to the LogIn page. Fill in your email id with which you created an account and your password.
+
+![login](./Images/login.png)
 
 After logging in, you reach the dashboard. To create a new room click on the New Meeting button and you'll be redirected to the new room.
 To invite over other friends in this room, send them the room code. You can get the room code from the url bar itself. It is the part of the link right after http://localhost:5000/. See the picture below!
 
+![dashboard](./Images/dashboard.png)
+
 For joining a room, enter the room code(as explained above) and click join button. 
 
 When you enter the video call, you'll see your teams video along with yours on the screen. Make sure that more than four people dont join because the room will be filled. On the bottom, you might see some buttons.
+
+![video call](./Images/video_call.png)
 
 **Audo/Video Toggle:** You can stop sharing your audio or video and start sharing them again as you like using these buttons.
 
@@ -102,7 +111,7 @@ When you enter the video call, you'll see your teams video along with yours on t
 
 On the right hand side, you can see the chatbox. Go ahead and type in the messages you wanna send to your team. Then click on the plus button on the right.
 
-**Log Out:** For loggint out click on the logout button on the top right corner of the dashboard.
+**Log Out:** For login out click on the logout button on the top right corner of the dashboard.
 
 # FAQ
 **How many of my friends can join?**
