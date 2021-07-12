@@ -8,7 +8,7 @@ This is a Real Time Video Chat Web Application with User Authentication that I b
 *	User Authentication using passport
 *	Invite Link to share with people
 *	Audio & Video Toggles
-* Register and Login page
+*   Register and Login page
 
 # Tech Stack 💻
 
@@ -82,7 +82,10 @@ That's it. Go to http://localhost:5000/ to begin right away!
 
 # Demo
 As you open the link to the app or run it locally, you'll come across a front page. To begin, click on the Register button.
+<<<<<<< HEAD
 ![register](./images/register)
+=======
+>>>>>>> 181886025cef49584e58243418f5de508f2e3c23
 
 If you're visiting the page for the first time, or want to create a new account, add your email id and choose a random password atleast 8 characters long. Also add the password again to confirm, and then click on register. If you already have an account, click on the Already have an account link (login).
 
